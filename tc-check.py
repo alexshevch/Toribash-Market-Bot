@@ -7,9 +7,10 @@ def getUser(username):
     function getUser parses json page with user information
     returns page content in string format
     """
-    url = "http://forum.toribash.com/tori_stats.php?username="+username+"&format=json"
+    url = "http://forum.toribash.com/tori_stats.php?username=%26%2312579%3B"+username+"&format=json"
     response = urllib2.urlopen(url)
     html = response.read()
+    print username
     return html
 
 
@@ -25,8 +26,8 @@ def getTC(inputFile, outputFile):
         username = username.replace('\n','')
         user_string = getUser(username)
         user_json = json.loads(user_string)
-        stats_tc.write(username+" - "+str(user_json["tc"])+"\n")
-#getTC('usernames.txt', 'tc-stats.txt')
+        stats_tc.write(str(user_json["tc"])+"\n")
+getTC('usernamesR2R.txt', 'tc-stats.txt')
 
 #reminder1: configure gathering stats for the plot from getTC outputs
 #reminder2: split into 2 different modules
