@@ -1,0 +1,530 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>ToriShop</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="forum_nav.css" rel="stylesheet" type="text/css" />
+<link href="tori.css" rel="stylesheet" type="text/css" />
+<link href="js/css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<link type="text/css" href="http://cache.toribash.com/javascript/css/smoothness/jquery-ui-1.8.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="http://content.toribash.com/javascript/jquery-latest.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/tori_shop.min.js"></script>
+<script type="text/javascript" src="http://cache.toribash.com/javascript/jquery.currency.min.js"></script>
+<script type="text/javascript">
+
+// added by hampa
+function SetAllCheckBoxes(FormName, FieldName, CheckValue) {
+	if(!document.forms[FormName])
+		return;
+	var objCheckBoxes = document.forms[FormName].elements[FieldName];
+	if(!objCheckBoxes)
+		return;
+	var countCheckBoxes = objCheckBoxes.length;
+	if(!countCheckBoxes)
+		objCheckBoxes.checked = CheckValue;
+	else
+		// set the check value for all check boxes
+		for(var i = 0; i < countCheckBoxes; i++)
+			objCheckBoxes[i].checked = CheckValue;
+}
+
+function changeLocation(menuObj) {
+	var i = menuObj.selectedIndex;
+	if(i > 0) {
+		window.location = menuObj.options[i].value;
+	}
+}
+
+var colors = ['#FF0000','#CC0000','#BB0000'];
+$(document).ready(function() {
+	$('#blinker').blink({
+		blinkPeriod: 1000, speed: 'slow',
+		onBlink: function(i) {
+			$(this).css('color', colors[i%3]);
+			$('body').append( i + ' - ' );
+		}
+	});
+});
+
+</script>
+
+</head>
+<body>
+<!-- override -->
+<style>
+#small_menu {
+	background-color: black;
+}
+#small_menu ul li a {
+	background-color: black;
+}
+#small_stats {
+	background-color: black;
+}
+#small_menu ul li a:hover {
+	background-color: #666666;
+}
+#small_menu ul li a:first-child { 
+	border-left: 1px solid #666666; 
+}
+</style>
+<!-- override -->
+<!-- server stats -->
+
+<div class="server_stats_box">
+	<div style="text-align: right">
+		<b>Servers:</b> 66, 
+		<b>Players:</b> 220, 
+		<b>Games:</b> 81,595,454
+	</div><div class="twitch_top_stream_list">
+			<div class="twitch_top_stream">
+				<a href="http://www.twitch.tv/evlevlmonkee" class="twitch_top_stream_preview" target="_blank" title="[PC] Stream Day 130. 1080P. MultiplayerDay. Come and Play. Giveaway at 25 viewers. "><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_evlevlmonkee-80x50.jpg" /></a>
+				<div class="twitch_top_stream_details" >
+					<a href="http://www.twitch.tv/evlevlmonkee" target="_blank" title="[PC] Stream Day 130. 1080P. MultiplayerDay. Come and Play. Giveaway at 25 viewers. " class="twitch_top_stream_heading">evlevlmonkee</a><br>
+					by <a href="member.php?u=3108791">evlmonkee</a><br>
+					<b>Viewers:</b> 6, <b>Max:</b> 6
+				</div>
+			</div><div style="text-align: right;"><a href="twitch.php"><b>Live Streams</b></a></div></div></div>
+<!-- end -->
+<div id="small_bg">
+<div id="small_logo"><a rel="nofollow" href="http://forum.toribash.com/rbs_banner.php?id=22&userid=2796413" target="_blank"><img src="http://cache.toribash.com/forum/banner/manonfire.png" border="0" alt="Toribash Replay Showcase" /></a>
+</div>
+<div id="small_menu">
+<ul>
+<li><a style="padding: 0pt 9px;" href="index.php">Forum</a></li>
+<li><a style="padding: 0pt 9px;" href="tori.php">Shop</a></li>
+<li><a style="padding: 0pt 9px;" href="tori_market.php">Market</a></li>
+<li><a style="padding: 0pt 9px;" href="clan.php">Clans</a></li>
+<li><a style="padding: 0pt 9px;" href="tori_mod_view.php?page=1">Mods</a></li>
+<li><a style="padding: 0pt 9px;" href="replay.php">Replays</a></li>
+<li><a style="padding: 0pt 9px;" href="script.php">Scripts</a></li>
+<li><a style="padding: 0pt 9px;" href="chat_view.php?channel=support">Help</a></li>
+<!-- <li><a style="padding: 0pt 9px;" href="http://wiki.toribash.com">Wiki</a></li> -->
+<li><a style="padding: 0pt 9px;" href="http://blog.toribash.com/ ">Blog</a></li>
+<li><a style="padding: 0pt 9px;" href="http://www.toribash.com/wii">Wii</a></li>
+<li><a style="padding: 0pt 9px;" href="forumdisplay.php?f=509">UniBash</a></li>
+<li><a style="padding: 0pt 9px;" href="minibash.php">Minibash</a></li>
+</ul>
+</div>
+</div>
+
+<style>
+.tcontainer{
+	position:relative;
+}
+
+.tcontent{
+	position:relative;
+	z-index:5;
+}
+
+.tbackground{
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	z-index:1;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=15)";
+	filter: alpha(opacity=15);
+	opacity:.15;
+}
+
+.alt0{
+       background-color: #E8E8E8;
+}
+</style>
+
+<div id="page">
+
+	<div id="leftbar">
+
+		<div class="box">
+			<h2 class="section"><b>Shop</b></h2>
+			<div class="content">
+				<ul>
+					<li><a href="tori_shop.php">View all items</a></li>
+					<li><a href="tori_groups.php">View items by color</a></li>
+					<li><a href="tori_usertitle.php">Usertitle Shop</a></li>
+				</ul>
+			</div>
+		</div>
+
+		
+
+		<div class="box">
+			<h2 class="section"><b>Toribash</b></h2>
+			<div class="content">
+				<ul>
+					<li><a href="tori_depositcredits.php">Buy ToriCredits</a></li>
+					<li><a href="tori_boosters.php">PayPal Boosters</a> / <a href="tori_mobile_boosters.php">Mobile</a></li>
+					<li><a href="tori_survey_main.php">Earn free Toricredits</a></li>
+					<li><a href="tori_ranking.php">Ranking</a></li>
+					<li><a href="tori_bounty.php">Bounty List</a></li>
+					<li><a href="tori_lottery.php">Item Lottery</a></li>
+					<li><a href="tori_broadcast.php">In-Game Broadcast</a></li>
+					<li><a href="tori_colors.php">Color List</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="box">
+			<h2 class="section"><b>Inventory</b></h2>
+			<div class="content">
+				<ul>
+					<li><a href="tori_inventory.php?sid=-2">Market Items</a></li>
+					<li><a href="tori_inventory.php?sid=-1">Activated</a></li>
+					<li><a href="tori_inventory.php">Deactivated</a></li>
+					<li><a href="tori_textures.php">Textures</a></li>
+					<li><a href="tori_textures_multiple.php">Textures (multiple)</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="box">
+			<h2 class="section"><b>Account</b></h2>
+			<div class="content">
+				<ul>
+					<li><a href="safetrade_list.php">Safetrade</a>
+					<li><a href="tori_transfer_toricredits.php">Transfer Toricredits</a></li>
+					<li><a href="bank.php">Shared Banks</a></li>
+					<li><a href="tori_utilities.php">Transfer Items</a></li>
+					<li><a href="tori_trans_hist.php">Account History</a></li>
+					<li><a href="tori_earnings.php">Ingame Earnings</a></li>
+					<li><a href="tori_achievements.php">Achievements</a></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="content">
+		
+			<div id="feature" class="box">
+				<h2 class="section"><b>Market</b></h2>
+				<div class="content"> 
+					<div id="blah">
+						
+						
+						
+						
+						<div id='clbox'>
+						<a href='market.html'><b>Click for information regarding account trading</b></a>
+						</div>
+						<script type="text/javascript">
+
+function select() {
+    document.getElementById('itemscomplete').focus();
+    document.getElementById('itemscomplete').select();
+}
+window.onload = select;
+
+function confirmBuy() {
+   var agree=confirm("Are you sure you want to buy this item?");
+   if (agree) {
+           return true;
+   }
+   else {
+           return false;
+   }
+}
+
+</script>
+
+
+
+<br />
+
+<table class="table_search">
+
+   <tr class="header">
+      <td>Search</td>
+      <td>Useful Links</td>
+   </tr>
+   <tr>
+      <td>
+		<form method="get">
+		<input type="hidden" name="action" value="search">
+			Item: 
+			<input type="text" name="item" size="35" id="itemscomplete" title="e.g. submit 'force'." value="Vampire Relax"><br />
+			Seller: 
+			<input type="text" name="username" id="usernamecomplete" title="enter a username" value=""><br />
+			Max Price: 
+			<input type="number" name="max" size="7" title="max item price" value="10030"><br />
+			Show only the cheapest offers: 
+			<input type="checkbox" name="group" title="Shows only one of each different item" value="1"><br />
+			<input type="submit" value="Search" class="btn">
+		</form>
+      </td>
+      <td>
+         <a href="tori_market.php?action=search&max=10030&group=1">Affordable items.</a><br />
+         <a href="tori_market.php?action=search&username=Marketeers" title="Only when you buy from market.">Items with no Qi restriction.</a><br />
+         <a href="tori_market.php?action=search&item=flame">Flames.</a><br />
+         <a href="tori_market.php?action=search&item=force">Forces.</a><br />
+         <a href="tori_market.php?action=search&item=relax">Relaxes.</a>
+      </td>
+   </tr>
+</table>
+
+<br />
+
+
+<div id="market_pagination">
+   <div class="pagination"></div>
+ <br />
+   <table class="market_items">
+      <tr>
+         <td class="header" colspan="5">Search Results (10 total)</td>
+      </tr>
+      <tr>
+         <td class="header"></td>
+         <td class="header" style="width:100%;">Item</td>
+         <td class="header">Action</td>
+         <td class="header">Price</td>
+         <td class="header">Seller</td>
+      </tr>
+      
+	<tr class=''>
+		<td class='item_image'>
+			<a href='tori_shop_item.php?id=54' title='View torishop information.'><img src='http://cache1.toribash.com/forum/torishop/images/items/vampire_relax.png'></a>
+		</td>
+		<form method='post' action='?action=buy_item'>
+			<td class='market_item_name' title='10 minutes ago.'><a href="tori_market.php?action=search&item=Vampire Relax">Vampire Relax</a> </td>
+			
+			
+		<input type='hidden' name='inventid' value='1462647'>
+		<input type='hidden' name='item_price' value='4599'>
+		<input type='hidden' name='seller' value='782240'>
+		<td class='item_control'>
+			<input type='submit' class='btn' title='Only click if you definitely want to buy this!' onclick='return confirmBuy()' value='Buy Item'>
+		</td>
+		
+		</form>
+		<td title="Torishop price: 5000.00 TC">4599 (<span style="color: green" >-8.02%</span>)</td><td><a href='tori_market.php?action=search&username=Insanity'>Insanity</a></td>
+		
+		
+		<td class='admin_control'> </td>
+	</tr>
+	
+	<tr class=''>
+		<td class='item_image'>
+			<a href='tori_shop_item.php?id=54' title='View torishop information.'><img src='http://cache1.toribash.com/forum/torishop/images/items/vampire_relax.png'></a>
+		</td>
+		<form method='post' action='?action=buy_item'>
+			<td class='market_item_name' title='20 hours ago.'><a href="tori_market.php?action=search&item=Vampire Relax">Vampire Relax</a> </td>
+			
+			
+		<input type='hidden' name='inventid' value='2663161'>
+		<input type='hidden' name='item_price' value='4600'>
+		<input type='hidden' name='seller' value='1879242'>
+		<td class='item_control'>
+			<input type='submit' class='btn' title='Only click if you definitely want to buy this!' onclick='return confirmBuy()' value='Buy Item'>
+		</td>
+		
+		</form>
+		<td title="Torishop price: 5000.00 TC">4600 (<span style="color: green" >-8%</span>)</td><td><a href='tori_market.php?action=search&username=Kure'>Kure</a></td>
+		
+		
+		<td class='admin_control'> </td>
+	</tr>
+	
+	<tr class=''>
+		<td class='item_image'>
+			<a href='tori_shop_item.php?id=54' title='View torishop information.'><img src='http://cache1.toribash.com/forum/torishop/images/items/vampire_relax.png'></a>
+		</td>
+		<form method='post' action='?action=buy_item'>
+			<td class='market_item_name' title='1 day ago.'><a href="tori_market.php?action=search&item=Vampire Relax">Vampire Relax</a> </td>
+			
+			
+		<input type='hidden' name='inventid' value='2592655'>
+		<input type='hidden' name='item_price' value='4698'>
+		<input type='hidden' name='seller' value='1879242'>
+		<td class='item_control'>
+			<input type='submit' class='btn' title='Only click if you definitely want to buy this!' onclick='return confirmBuy()' value='Buy Item'>
+		</td>
+		
+		</form>
+		<td title="Torishop price: 5000.00 TC">4698 (<span style="color: green" >-6.04%</span>)</td><td><a href='tori_market.php?action=search&username=Kure'>Kure</a></td>
+		
+		
+		<td class='admin_control'> </td>
+	</tr>
+	
+	<tr class=''>
+		<td class='item_image'>
+			<a href='tori_shop_item.php?id=54' title='View torishop information.'><img src='http://cache1.toribash.com/forum/torishop/images/items/vampire_relax.png'></a>
+		</td>
+		<form method='post' action='?action=buy_item'>
+			<td class='market_item_name' title='15 days ago.'><a href="tori_market.php?action=search&item=Vampire Relax">Vampire Relax</a> </td>
+			
+			
+		<input type='hidden' name='inventid' value='2526973'>
+		<input type='hidden' name='item_price' value='4800'>
+		<input type='hidden' name='seller' value='2617152'>
+		<td class='item_control'>
+			<input type='submit' class='btn' title='Only click if you definitely want to buy this!' onclick='return confirmBuy()' value='Buy Item'>
+		</td>
+		
+		</form>
+		<td title="Torishop price: 5000.00 TC">4800 (<span style="color: green" >-4%</span>)</td><td><a href='tori_market.php?action=search&username=DragonForceVN'>DragonForceVN</a></td>
+		
+		
+		<td class='admin_control'> </td>
+	</tr>
+	
+	<tr class=''>
+		<td class='item_image'>
+			<a href='tori_shop_item.php?id=54' title='View torishop information.'><img src='http://cache1.toribash.com/forum/torishop/images/items/vampire_relax.png'></a>
+		</td>
+		<form method='post' action='?action=buy_item'>
+			<td class='market_item_name' title='24 days ago.'><a href="tori_market.php?action=search&item=Vampire Relax">Vampire Relax</a> </td>
+			
+			
+		<input type='hidden' name='inventid' value='2735934'>
+		<input type='hidden' name='item_price' value='4999'>
+		<input type='hidden' name='seller' value='537431'>
+		<td class='item_control'>
+			<input type='submit' class='btn' title='Only click if you definitely want to buy this!' onclick='return confirmBuy()' value='Buy Item'>
+		</td>
+		
+		</form>
+		<td title="Torishop price: 5000.00 TC">4999 (<span style="color: green" >-0.02%</span>)</td><td><a href='tori_market.php?action=search&username=shevaroler'>shevaroler</a></td>
+		
+		
+		<td class='admin_control'> </td>
+	</tr>
+	
+	<tr class=''>
+		<td class='item_image'>
+			<a href='tori_shop_item.php?id=54' title='View torishop information.'><img src='http://cache1.toribash.com/forum/torishop/images/items/vampire_relax.png'></a>
+		</td>
+		<form method='post' action='?action=buy_item'>
+			<td class='market_item_name' title='16th October 2013'><a href="tori_market.php?action=search&item=Vampire Relax">Vampire Relax</a> </td>
+			
+			
+		<input type='hidden' name='inventid' value='126496'>
+		<input type='hidden' name='item_price' value='6499'>
+		<input type='hidden' name='seller' value='2088488'>
+		<td class='item_control'>
+			<input type='submit' class='btn' title='Only click if you definitely want to buy this!' onclick='return confirmBuy()' value='Buy Item'>
+		</td>
+		
+		</form>
+		<td title="Torishop price: 5000.00 TC">6499 (<span style="color: red" >+29.98%</span>)</td><td><a href='tori_market.php?action=search&username=Helosh'>Helosh</a></td>
+		
+		
+		<td class='admin_control'> </td>
+	</tr>
+	
+	<tr class=''>
+		<td class='item_image'>
+			<a href='tori_shop_item.php?id=54' title='View torishop information.'><img src='http://cache1.toribash.com/forum/torishop/images/items/vampire_relax.png'></a>
+		</td>
+		<form method='post' action='?action=buy_item'>
+			<td class='market_item_name' title='24th October 2012'><a href="tori_market.php?action=search&item=Vampire Relax">Vampire Relax</a> </td>
+			
+			
+		<input type='hidden' name='inventid' value='1393775'>
+		<input type='hidden' name='item_price' value='7000'>
+		<input type='hidden' name='seller' value='2672732'>
+		<td class='item_control'>
+			<input type='submit' class='btn' title='Only click if you definitely want to buy this!' onclick='return confirmBuy()' value='Buy Item'>
+		</td>
+		
+		</form>
+		<td title="Torishop price: 5000.00 TC">7000 (<span style="color: red" >+40%</span>)</td><td><a href='tori_market.php?action=search&username=eNovo'>eNovo</a></td>
+		
+		
+		<td class='admin_control'> </td>
+	</tr>
+	
+	<tr class=''>
+		<td class='item_image'>
+			<a href='tori_shop_item.php?id=54' title='View torishop information.'><img src='http://cache1.toribash.com/forum/torishop/images/items/vampire_relax.png'></a>
+		</td>
+		<form method='post' action='?action=buy_item'>
+			<td class='market_item_name' title='28th November 2011'><a href="tori_market.php?action=search&item=Vampire Relax">Vampire Relax</a> </td>
+			
+			
+		<input type='hidden' name='inventid' value='1447349'>
+		<input type='hidden' name='item_price' value='10000'>
+		<input type='hidden' name='seller' value='450159'>
+		<td class='item_control'>
+			<input type='submit' class='btn' title='Only click if you definitely want to buy this!' onclick='return confirmBuy()' value='Buy Item'>
+		</td>
+		
+		</form>
+		<td title="Torishop price: 5000.00 TC">10000 (<span style="color: red" >+100%</span>)</td><td><a href='tori_market.php?action=search&username=felipevi'>felipevi</a></td>
+		
+		
+		<td class='admin_control'> </td>
+	</tr>
+	
+	<tr class=''>
+		<td class='item_image'>
+			<a href='tori_shop_item.php?id=54' title='View torishop information.'><img src='http://cache1.toribash.com/forum/torishop/images/items/vampire_relax.png'></a>
+		</td>
+		<form method='post' action='?action=buy_item'>
+			<td class='market_item_name' title='16th April 2013'><a href="tori_market.php?action=search&item=Vampire Relax">Vampire Relax</a> </td>
+			
+			
+		<input type='hidden' name='inventid' value='2580612'>
+		<input type='hidden' name='item_price' value='30000'>
+		<input type='hidden' name='seller' value='2604305'>
+		<td class='item_control'>
+			<input type='submit' class='btn' title='Only click if you definitely want to buy this!' onclick='return confirmBuy()' value='Buy Item'>
+		</td>
+		
+		</form>
+		<td title="Torishop price: 5000.00 TC">30000 (<span style="color: red" >+500%</span>)</td><td><a href='tori_market.php?action=search&username=Connorthethird'>Connorthethird</a></td>
+		
+		
+		<td class='admin_control'> </td>
+	</tr>
+	
+	<tr class=''>
+		<td class='item_image'>
+			<a href='tori_shop_item.php?id=54' title='View torishop information.'><img src='http://cache1.toribash.com/forum/torishop/images/items/vampire_relax.png'></a>
+		</td>
+		<form method='post' action='?action=buy_item'>
+			<td class='market_item_name' title='16th April 2013'><a href="tori_market.php?action=search&item=Vampire Relax">Vampire Relax</a> </td>
+			
+			
+		<input type='hidden' name='inventid' value='2580598'>
+		<input type='hidden' name='item_price' value='30000'>
+		<input type='hidden' name='seller' value='2604305'>
+		<td class='item_control'>
+			<input type='submit' class='btn' title='Only click if you definitely want to buy this!' onclick='return confirmBuy()' value='Buy Item'>
+		</td>
+		
+		</form>
+		<td title="Torishop price: 5000.00 TC">30000 (<span style="color: red" >+500%</span>)</td><td><a href='tori_market.php?action=search&username=Connorthethird'>Connorthethird</a></td>
+		
+		
+		<td class='admin_control'> </td>
+	</tr>
+	
+   </table>
+   <br /> <div class="pagination"></div>
+
+</div>
+
+					</div>
+				</div>
+			</div>
+		
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+
+</div>	
+
+<div id="footer">
+	<p id="legal">Copyright &copy; 2010 Nabi Studios. All Rights Reserved</p>
+	<p id="links"><a href="#">Privacy Policy</a> | <a href="http://forum.toribash.com/tori_tos.php">Terms of Service</a></p>
+</div>
+
+</body>
+</html>
