@@ -1,4 +1,4 @@
-TC-check
+Toribash-Market-Bot
 ========
 
-Toribash Balance Checking Script
+Automated system for buying items in Toribash Market
